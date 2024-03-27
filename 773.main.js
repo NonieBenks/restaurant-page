@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkrestaurant_page=self.webpackChunkrestaurant_page||[]).push([[773],{773:(e,s,t)=>{t.r(s),t.d(s,{Menu:()=>u});class u{constructor(){}buildMenuContent(){}}}}]);
