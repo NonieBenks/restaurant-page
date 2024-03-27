@@ -1,51 +1,45 @@
-import Img from './assets/img/restaurant.jpeg';
+import { About } from './modules/about-tab';
+import { Home } from './modules/home-tab';
+import { Menu } from './modules/menu-tab';
 import './styles.css';
 
-const restarantPic = new Image();
-restarantPic.src = Img;
-function buildHeader() {
-  const header = document.createElement("header");
-  const nav = document.createElement("nav");
-  const buttonContainer = document.createElement("div");
+let homePage = new Home('../assets/img/noodles.jpeg');
 
-  buttonContainer.className = "button-container";
- 
-  header.appendChild(nav);
-  nav.appendChild(buttonContainer);
+homePage.buildHeader();
+homePage.buildContent();
 
-  const buttonsArray = ["Home", "About", "Contact"];
+const homeButton = document.querySelector('.home-button');
+const menuButton = document.querySelector('.menu-button');
+const aboutButton = document.querySelector('.about-button');
 
-  buttonsArray.forEach(btn => {
-    const button = document.createElement("button");
-    buttonContainer.appendChild(button);
-    button.innerText = btn;
-  })
-  document.body.appendChild(nav);}
+homeButton.addEventListener("click", () => {
+  import("./modules/home-tab.js").then((Module) => {
+    clearContent();
+    const homeTab = new Module.Home();
+    homeTab.buildContent();
+  });
+});
 
-function buildContent() {
-  const contentContainer = document.createElement("div");
-  const contentBlock = document.createElement("div");
-  const logoBlock = document.createElement("div");
-  const descriptionBlock = document.createElement("div");
-  const menuButton = document.createElement("button");
+menuButton.addEventListener("click", () => {
+  import("./modules/menu-tab.js").then((Module) => {
+    clearContent();
+    const menuTab = new Module.Menu();
+    menuTab.buildMenuContent();
+  });
+});
 
-  logoBlock.className = "logo-block";
-  contentBlock.className = "content-block";
-  contentContainer.className = "content-container";
-  descriptionBlock.className = "description-block";
+aboutButton.addEventListener("click", () => {
+  import("./modules/about-tab.js").then((Module) => {
+    clearContent();
+    const aboutTab = new Module.About('../assets/img/restaurant.jpeg');
+    aboutTab.buildAboutContent();
+  });
+});
 
-  logoBlock.innerText = "Chez \n Adeline";
-  menuButton.innerText = "Menu";
-  descriptionBlock.innerText = "Welcome to Chez Adeline! \n Bringing you the most delicate french culinary experience since 1965."
+function clearContent() {
+let contentBlock = document.querySelector(`.content-block`);
 
-  contentBlock.appendChild(contentContainer);
-  contentContainer.appendChild(logoBlock);
-  contentContainer.appendChild(descriptionBlock);
-  contentContainer.appendChild(menuButton);
-  contentBlock.appendChild(restarantPic);
-
-  document.body.appendChild(contentBlock);
+  if (contentBlock !== null) {
+    contentBlock.remove()
+  }
 }
-console.log('restart again');
-buildHeader();
-buildContent();
