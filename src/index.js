@@ -23,7 +23,7 @@ menuButton.forEach((btn) => {
     import("./modules/menu-tab.js").then((Module) => {
       clearContent();
       const menuTab = new Module.Menu();
-      menuTab.buildMenuContent();
+      menuTab.requestMenuItems();
     });
   });
 });

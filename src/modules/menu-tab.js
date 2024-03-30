@@ -1,19 +1,16 @@
 import { ApiModule } from "./api/api-module";
 
-const API_KEY = "699e3da2106845ea9a811f6f6e740de0";
-
 class Menu {
   constructor() {}
 
-  receiveMenuItems(items) {
-    console.log(items.results);
+  displayMenuItems(items) {
+    const menuContentBlock = document.createElement("div");
     const menuContainer = document.createElement("div");
-    items.results.forEach((item) => {
-      fetch(
-        `${priceApiUrl}${item.id}/priceBreakdownWidget.json?apiKey=${API_KEY}`
-      ).then((response) => {
-        menuPrice.textContent = `${response["totalCost"]} €`;
-      });
+
+    menuContentBlock.classList.add("content-block", "menu-content-block");
+    menuContainer.className = "menu-container";
+
+    items.forEach((item) => {
       const menuItem = document.createElement("div");
       const menuTitle = document.createElement("h4");
       const menuImage = document.createElement("img");
@@ -23,17 +20,21 @@ class Menu {
 
       menuTitle.textContent = `${item.title}`;
       menuImage.src = `${item.image}`;
+      menuPrice.textContent = `${
+        Math.floor(Math.random() * (20 - 10 + 1)) + 10
+      } €`;
 
       menuItem.appendChild(menuTitle);
       menuItem.appendChild(menuImage);
       menuItem.appendChild(menuPrice);
       menuContainer.appendChild(menuItem);
     });
-    document.body.appendChild(menuContainer);
+    document.body.appendChild(menuContentBlock);
+    menuContentBlock.appendChild(menuContainer);
   }
-  buildMenuContent() {
+  requestMenuItems() {
     let apiModule = new ApiModule();
-    apiModule.fetchFoodData();
+    apiModule.fetchMenuItems();
   }
 }
 
